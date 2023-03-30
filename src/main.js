@@ -34,20 +34,33 @@ import VueSocialSharing from 'vue-social-sharing'
 
 import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
-
 window.Pusher = Pusher
 
+// with pusher credential
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: '94fc42daa3f883fa52e4',
+//     cluster: 'ap2',
+//     wsHost: '127.0.0.1',
+//     wsPort: 6001,
+//     disableStats: true,
+//     forceTLS: false
+// });
+
+// without pusher credential
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '94fc42daa3f883fa52e4',
-    cluster: 'ap2',
-    wsHost: '127.0.0.1',
-    wsPort: 6001,
-    disableStats: true,
-    forceTLS: false
+  broadcaster: 'pusher',
+  key: 'local',
+  cluster: 'mt1',
+  wsHost: window.location.hostname, // for public channel (127.0.0.1)
+  // wsHost: window.location.host, // for private channel (127.0.0.1:5173)
+  wsPort: 6001,
+  disableStats: false,
+  encrypted: false,
+  forceTLS: false,
+  enabledTransports: ['ws', 'wss'],
 });
-
-
+    
 createApp(App)
   .use(router)
   .use(store)
